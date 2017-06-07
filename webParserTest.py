@@ -6,9 +6,9 @@ class rWebParser_test(unittest.main()):
     #tests that the program will respond properly to various possible inputs
     def testChar(self):
         #should throw an exception if not in a-z:
-        self.assertRaises(NameError, scrape("https://www.google.com/",7)) #if the input is  an int
-        self.assertRaises(NameError, scrape("https://www.google.com/","")) #if the input is an empty space
-        self.assertRaises(NameError, scrape("https://www.google.com/","addfd")) #if the input is more than one character
+        self.assertRaises(TypeError, scrape("https://www.google.com/",7)) #if the input is  an int
+        self.assertRaises(ValueError, scrape("https://www.google.com/","")) #if the input is an empty space
+        self.assertRaises(ValueError, scrape("https://www.google.com/","addfd")) #if the input is more than one character
     
     #tests if the correct number is given- looking at known answers
     #PROBLEM - if the checked sites were to change, the results may not be the same
@@ -28,7 +28,10 @@ class rWebParser_test(unittest.main()):
      
     #check that errors will be raised if an invalid URL link is passed through the parameter   
     def testURL(self):
-        self.assertRaises(NameError, scrape("http://brulrnbfajkdnajbakjs.org/","y"))
-        self.assertRaises(NameError, scrape(4,"y"))
-        self.assertRaises(NameError, scrape("akfhkjaslfkl","z"))
+        self.assertRaises(ValueError, scrape("http://brulrnbfajkdnajbakjs.org/","y")) #test for an invalid url link
+        self.assertRaises(TypeError, scrape(4,"y")) #when URL input is not a string
+        self.assertRaises(ValueError, scrape("akfhkjaslfkl","z")) #URL input is a string not in URL format
+
+if __name__ == "__main__":
+    unittest.main()
         
