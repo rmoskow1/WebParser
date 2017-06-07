@@ -13,7 +13,7 @@ class rWebParser_test(unittest.TestCase):
     #tests if the correct number is given- looking at known answers
     #PROBLEM - if the checked sites were to change, the results may not be the same
     def test_Result(self):
-        self.assertEqual(scrape("http://httpbin.org/anything","l"),15) #check known answers
+        self.assertEqual(scrape("http://httpbin.org/anything","l"),16) #check known answers
         self.assertEqual(scrape("http://httpbin.org/get","q"),9)
         self.assertEqual(scrape("http://httpbin.org/html","e"),329)
 

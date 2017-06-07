@@ -5,25 +5,26 @@ def scrape(website, letter):
     try:
         r = requests.get(website)
     except:
-        raise NameError("This website does not exist")
+        raise ValueError("This website does not exist")
 
     if letter == "":
-        raise NameError("No input was given")
+        raise TypeError("No input was given")
 
     counter = 0
+
     if letter.isalpha() and len(letter) == 1:
         for i in r.text:
             if i.lower() == letter.lower():
                 counter += 1
 
     elif len(letter) > 1:
-        raise NameError("Input must be one character")
+        raise ValueError("Input must be one character")
     elif letter.isnumeric():
-        raise NameError("A number should not be given")
+        raise TypeError("A number should not be given")
     elif not (letter.isalpha()):
-        raise NameError("Only letters are accepted")
+        raise ValueError("Only letters are accepted")
 
-    print(counter)
+    return counter
 
 if __name__ == "__main__":
     website = input("Give a website\n> ")
