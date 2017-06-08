@@ -5,8 +5,10 @@ def scrape(website, letter):
 
 
     r = requests.get(website)
-    text = BeautifulSoup(r.text, "html.parser").get_text()
 
+    soup = BeautifulSoup(r.text, "html.parser")
+    [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title'])]
+    text = soup.getText()
 
     if letter == "":
         raise TypeError("No input was given")
@@ -30,4 +32,4 @@ def scrape(website, letter):
 if __name__ == "__main__":
     website = input("Give a website\n> ")
     letter = input("Give a letter\n> ")
-    scrape(website,letter)
+    print(scrape(website,letter))

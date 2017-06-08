@@ -8,39 +8,24 @@ from unittest import mock
 #         self.text = None
 
 class ScraperTest(unittest.TestCase):
-    def test_Scraper(self):
-        """self.assertEqual(rScraper.scrape("http://now.httpbin.org/", 'f'), 2) #test the basic case
-        self.assertEqual(rScraper.scrape("http://now.httpbin.org/", 'A'), 9) #test to see if it interprets caps and lowercase as the same
-        self.assertEqual(rScraper.scrape("http://now.httpbin.org/", 'w'), 4) #test to see if it catches letters that have both caps and lowers
-        self.assertEqual(rScraper.scrape("http://now.httpbin.org/", 'W'), 4) #same test just reverse
-        self.assertNotEqual(rScraper.scrape("http://now.httpbin.org/", '"'), 34) #test that non-alpha chars don't return their number
-        self.assertRaises(rScraper.scrape("http://now.httpbin.org/", '"'), TypeError) #test that non-alpha chars return an error
-        self.assertRaises(rScraper.scrape("http://now.httpbin.org/", 'ab'), TypeError) #test that multi-char return an error
-        # self.assertRaises(rScraper.scrape("www.pinchasteitzrocks.org", 'a'), ValueError) #test that non-websites return an error
-        self.assertRaises(rScraper.scrape("http://now.httpbin.org/", 6), ValueError) #test that numbers chars return an error
-        self.assertRaises(rScraper.scrape("http://now.httpbin.org/", ''), ValueError) #test that empty strings return an error
-        """
-        return
 
     @mock.patch('pScraper.requests.get')
     def test_Scraper(self, mock_req):
 
         mock_req.return_value.text = "l l l l"
-        self.assertEqual(pScraper.scrape("www.cheating.com", 'l'), 4)
-        self.assertEqual(pScraper.scrape("www.cheating.com", 'L'), 4)
-        self.assertRaises(TypeError, pScraper.scrape, "www.cheating.com", 6)
-        self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", 'Ll')
-        self.assertEqual(pScraper.scrape("www.cheating.com", 'M'), 0)
-        self.assertRaises(TypeError, pScraper.scrape, "www.cheating.com", '')
+        self.assertEqual(pScraper.scrape("www.cheating.com", 'l'), 4) # check standard letter test
+        self.assertEqual(pScraper.scrape("www.cheating.com", 'L'), 4) # check that caps or lowers is irrelevant
+        self.assertRaises(TypeError, pScraper.scrape, "www.cheating.com", 6) # check that numbers fail
+        self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", 'Ll') # check that mutli-char inputs fail
+        self.assertEqual(pScraper.scrape("www.cheating.com", 'M'), 0) # check that it doesn't fail for 0
+        self.assertRaises(TypeError, pScraper.scrape, "www.cheating.com", '') # check that no input fails
 
         mock_req.return_value.text = "M m M m"
-        self.assertEqual(pScraper.scrape("www.cheating.com", 'm'), 4)
-        self.assertEqual(pScraper.scrape("www.cheating.com", 'M'), 4)
+        self.assertEqual(pScraper.scrape("www.cheating.com", 'm'), 4) # check that it properly interprets line with caps and lowers
+        self.assertEqual(pScraper.scrape("www.cheating.com", 'M'), 4) # same
 
         mock_req.return_value.text = "L @ L @"
-        self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", '@')
-
-
+        self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", '@') # check that it fails for a non-alpha char
 
 if __name__ == "__main__":
     unittest.main()
