@@ -1,4 +1,5 @@
 import pScraper
+import rScraper
 import unittest
 from unittest import mock
 
