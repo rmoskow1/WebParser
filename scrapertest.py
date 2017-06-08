@@ -16,7 +16,7 @@ class ScraperTest(unittest.TestCase):
         self.assertEqual(pScraper.scrape("www.cheating.com", 'l'), 4) # check standard letter test
         self.assertEqual(pScraper.scrape("www.cheating.com", 'L'), 4) # check that caps or lowers is irrelevant
         self.assertRaises(TypeError, pScraper.scrape, "www.cheating.com", 6) # check that numbers fail
-        self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", 'Ll') # check that mutli-char inputs fail
+        self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", 'Ll') # check that multi-char inputs fail
         self.assertEqual(pScraper.scrape("www.cheating.com", 'M'), 0) # check that it doesn't fail for 0
         self.assertRaises(TypeError, pScraper.scrape, "www.cheating.com", '') # check that no input fails
 
@@ -26,6 +26,9 @@ class ScraperTest(unittest.TestCase):
 
         mock_req.return_value.text = "L @ L @"
         self.assertRaises(ValueError, pScraper.scrape, "www.cheating.com", '@') # check that it fails for a non-alpha char
+
+        self.assertRaises(TypeError, pScraper.scrape, "", 'L')  # check that no input fails for website
+        self.assertRaises(TypeError, pScraper.scrape, 6, 'L')  # check that numbers fail for website
 
 if __name__ == "__main__":
     unittest.main()
