@@ -1,26 +1,27 @@
 import requests
+from bs4 import BeautifulSoup
 
 def scrape(website, letter):
 
-    try:
-        r = requests.get(website)
-    except:
-        raise ValueError("This website does not exist")
+
+    r = requests.get(website)
+    text = BeautifulSoup(r.text, "html.parser").get_text()
+
 
     if letter == "":
         raise TypeError("No input was given")
+    elif type(letter) == int:
+        raise TypeError("A number should not be given")
 
     counter = 0
 
     if letter.isalpha() and len(letter) == 1:
-        for i in r.text:
+        for i in text:
             if i.lower() == letter.lower():
                 counter += 1
 
     elif len(letter) > 1:
         raise ValueError("Input must be one character")
-    elif letter.isnumeric():
-        raise TypeError("A number should not be given")
     elif not (letter.isalpha()):
         raise ValueError("Only letters are accepted")
 
